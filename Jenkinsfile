@@ -66,5 +66,12 @@ pipeline {
                 jacoco execPattern: 'target/jacoco-it.exec'
             }
         }
+        stage('Performance tests') {
+            steps {
+                echo "-=- execute performance tests -=-"
+                sh "./mvnw jmeter:jmeter jmeter:results -Djmeter.target.host=${TEST_CONTAINER_NAME} -Djmeter.target.port=${APP_LISTENING_PORT} -Djmeter.target.root=${APP_CONTEXT_ROOT}"
+                perfReport sourceDataFiles: 'target/jmeter/results/*.csv'
+            }
+        }
     }
 }
