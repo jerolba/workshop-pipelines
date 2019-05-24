@@ -16,5 +16,12 @@ pipeline {
         TEST_CONTAINER_NAME = "ci-${APP_NAME}-${BUILD_NUMBER}"
         DOCKER_HUB = credentials("${ORG_NAME}-docker-hub")
     }
- 
+    stages {
+            stage('Compile') {
+                steps {
+                    echo "-=- compiling project -=-"
+                    sh "./mvnw clean compile"
+                }
+            }
+    }
 }
