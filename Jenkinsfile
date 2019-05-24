@@ -37,5 +37,12 @@ pipeline {
                 sh "./mvnw org.pitest:pitest-maven:mutationCoverage"
             }
         }
+        stage('Package') {
+            steps {
+                echo "-=- packaging project -=-"
+                sh "./mvnw package -DskipTests"
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
     }
 }
